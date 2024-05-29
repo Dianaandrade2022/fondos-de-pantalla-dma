@@ -10,8 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Bienvenido a Fondos de pantalla DMA"
+        android:text="Bienvenido a Fondos de pantalla Iniciales"
         android:textSize="36dp"
+        android:background="#F5C9DC"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

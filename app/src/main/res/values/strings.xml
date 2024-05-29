@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Fondos de pantalla DMA</string>
     <string name="desarrollador">Derechos reservados: Diana Andrade</string>
+
+    <string name="InicioAdmin">Inicio</string>
+    <string name="PerfilAdmin">Perfil</string>
+    <string name="RegistrarAdmin">Registrar</string>
+    <string name="ListarAdmin">Lista de administradores</string>
+    <string name="Salir">Cerrar sesión</string>
 </resources>
