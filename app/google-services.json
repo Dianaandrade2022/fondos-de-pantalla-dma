@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "762395953031",
+    "project_id": "b-dma-fondosdepantalla",
+    "storage_bucket": "b-dma-fondosdepantalla.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762395953031:android:1dbf9b46a730a21d3e3522",
+        "android_client_info": {
+          "package_name": "com.example.fondosdepantalladma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXNX5luAe8Xfz2UmM6_FJNSOZj0WWSr0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
