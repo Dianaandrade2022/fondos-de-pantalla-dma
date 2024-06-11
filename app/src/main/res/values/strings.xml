@@ -11,6 +11,21 @@
     <string name="RegistrarAdmin">Registrar</string>
     <string name="ListarAdmin">Lista de administradores</string>
     <string name="Salir">Cerrar sesión</string>
+
+    <string name="Opcionestxt">Opciones</string>
+    <string name="InicioCliente">Inicio</string>
+
+    <string name="MasOpciones">Más opciones</string>
+
+    <string name="AcercaDe">Acerca de</string>
+    <string name="Compartir">Compartir</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
 </resources>
