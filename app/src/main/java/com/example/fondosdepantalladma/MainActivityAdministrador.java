@@ -29,7 +29,7 @@ public class MainActivityAdministrador extends AppCompatActivity implements Navi
         Toolbar toolbar = findViewById(R.id.toolbarA);
         setSupportActionBar(toolbar);
 
-        drawerLayout = findViewById(R.id.nav_viewA);
+        drawerLayout = findViewById(R.id.drawer_layout_A);
 
         NavigationView navigationView = findViewById(R.id.nav_viewA);
         navigationView.setNavigationItemSelectedListener(this);
