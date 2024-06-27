@@ -13,11 +13,14 @@ import com.example.fondosdepantalladma.R;
 
 public class RegistrarAdmin extends Fragment {
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+//
         View view = inflater.inflate(R.layout.fragment_registrar_admin, container, false);
         return view;
+
     }
 }
