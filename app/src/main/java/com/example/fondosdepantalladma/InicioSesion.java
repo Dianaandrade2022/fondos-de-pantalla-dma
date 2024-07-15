@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -36,10 +37,13 @@ public class InicioSesion extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_sesion);
 
         ActionBar actionBar = getSupportActionBar(); //Creamos el actionbar
-        assert actionBar != null;                    //Afirmamos que el action bar no sea un null
-        actionBar.setTitle("Inicio sesión");         //Le asignamos un titulo
-        actionBar.setDisplayHomeAsUpEnabled(true);   //Habilitamos el boton de retoseso
-        actionBar.setDisplayShowHomeEnabled(true);   //Mostrar el boton
+        if (actionBar == null) {
+            Log.e("InicioSesion", "ActionBar es null");
+        } else {
+            actionBar.setTitle("Inicio sesión");         //Le asignamos un titulo
+            actionBar.setDisplayHomeAsUpEnabled(true);   //Habilitamos el boton de retoseso
+            actionBar.setDisplayShowHomeEnabled(true);   //Mostrar el boton
+        }
 
         Correo = findViewById(R.id.Correo);
         Password = findViewById(R.id.Password);

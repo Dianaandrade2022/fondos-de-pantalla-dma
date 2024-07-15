@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.fondosdepantalladma.InicioSesion;
 import com.example.fondosdepantalladma.R;
 
 public class AcercaDeCliente extends Fragment {
@@ -29,7 +30,7 @@ public class AcercaDeCliente extends Fragment {
             @Override
             public void onClick(View view) {
                 //Forma 1
-                startActivity(new Intent(getActivity(), delete.class));
+                startActivity(new Intent(getActivity(), InicioSesion.class));
 
                 //Forma 2
                 //Intent intent = new Intent(getActivity(), InicioSesion.class);
