@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Contacts;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,128 +32,127 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-
 public class RegistrarAdmin extends Fragment {
 
     TextView FechaRegistro;
-    EditText Correo,Password,Nombres,Apellidos,Edad;
+    EditText Correo, Password, Nombres, Apellidos, Edad;
     Button Registrar;
 
     FirebaseAuth auth;
 
     ProgressDialog progressDialog;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//
-        View view = inflater.inflate(R.layout.fragment_registrar_admin, container, false);
+        View vista = inflater.inflate(R.layout.fragment_registrar_admin, container, false);
 
-        FechaRegistro = view.findViewById(R.id.FechaRegistro);
-        Correo = view.findViewById(R.id.Correo);
-        Password = view.findViewById(R.id.Password);
-        Nombres = view.findViewById(R.id.Nombres);
-        Apellidos = view.findViewById(R.id.Apellidos);
-        Edad = view.findViewById(R.id.Edad);
-        Registrar = view.findViewById(R.id.Registrar);
+        FechaRegistro = vista.findViewById(R.id.FechaRegistro);
+        Correo = vista.findViewById(R.id.Correo);
+        Password = vista.findViewById(R.id.Password);
+        Nombres = vista.findViewById(R.id.Nombres);
+        Apellidos = vista.findViewById(R.id.Apellidos);
+        Edad = vista.findViewById(R.id.Edad);
 
-//        Inicializando firebase Authentication
-        auth = FirebaseAuth.getInstance();
+        Registrar = vista.findViewById(R.id.Registrar);
 
+        auth = FirebaseAuth.getInstance(); //Inicializando Firebase Authentication
 
         Date date = new Date();
-        SimpleDateFormat fecha = new SimpleDateFormat("d 'de' MMMM 'del' yyyy");
-
-        String SFecha = fecha.format(date);
-
+        SimpleDateFormat fecha = new SimpleDateFormat("d 'de' MMMM 'del' yyyy"); //27 de Junio del 2024
+        String SFecha = fecha.format(date); //Convertir fecha a un string
         FechaRegistro.setText(SFecha);
 
+        //Al dar clic en registrar
         Registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Convertimos a string EditText: Correo y Password
+                //Convertimos a string EditText: Correo y Password
                 String correo = Correo.getText().toString();
                 String pass = Password.getText().toString();
+                String nombre = Nombres.getText().toString();
+                String apellidos = Apellidos.getText().toString();
+                String edad = Edad.getText().toString();
 
-//                Validación de Correo
+                if (correo.equals("")|| pass.equals("")|| nombre.equals("")|| apellidos.equals("")|| edad.equals("")){
+                    Toast.makeText(getActivity(), "Por favor llene todos los campos", Toast.LENGTH_SHORT).show();
+                }else {
+                    //validacion de correo
+                    if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()){
+                        Correo.setError("Correo Invalido!");
+                        Correo.setFocusable(true);
+                    } else if (pass.length()<6) {
+                        Password.setError("La contraseña debe ser mayor a 6 caracteres");
+                        Password.setFocusable(true);
+                    } else {
+                        RegistroAdministradores(correo, pass);
+                    }
 
-                if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
-                    Correo.setError("¡Correo inválido!");
-                    Correo.setFocusable(true);
-                } else if (pass.length() < 6) {
-                    Password.setError("La contraseña debe ser mayor o igual a 6 carácteres");
-                    Password.setFocusable(true);
-                }else{
-                    RegistroAdministradores(correo,pass);
                 }
+
             }
         });
 
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Registrando, espere ...");
+        progressDialog.setMessage("Registrando, espere por favor");
         progressDialog.setCancelable(false);
-
-
-        return view;
-
+        return vista;
     }
-
+    //Metodo para registrar Administradores
     private void RegistroAdministradores(String correo, String pass) {
 
         progressDialog.show();
-        auth.createUserWithEmailAndPassword(correo,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    progressDialog.dismiss();
-                    FirebaseUser user = auth.getCurrentUser();
-                    assert user != null;
+        auth.createUserWithEmailAndPassword(correo, pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //Si el administrador fue creado correctamente
+                        if (task.isSuccessful()){
+                            progressDialog.dismiss();
+                            FirebaseUser user = auth.getCurrentUser();
+                            assert user != null;
 
-                    String UID = user.getUid();
-                    String correo = Correo.getText().toString();
-                    String pass = Password.getText().toString();
-                    String nombres = Nombres.getText().toString();
-                    String apellidos = Apellidos.getText().toString();
-                    String edad = Edad.getText().toString();
-                    int EdadInt  = Integer.parseInt(edad);
+                            //Convertir a cadena los datos
+                            String UID = user.getUid();
+                            String correo = Correo.getText().toString();
+                            String pass = Password.getText().toString();
+                            String nombre = Nombres.getText().toString();
+                            String apellidos = Apellidos.getText().toString();
+                            String edad = Edad.getText().toString();
+                            int EdadInt = Integer.parseInt(edad);
 
-                    HashMap<Object,Object> Administradores = new HashMap<>();
+                            HashMap<Object, Object> Administradores = new HashMap<>();
 
-                    Administradores.put("UID", UID);
-                    Administradores.put("CORREO", correo);
-                    Administradores.put("PASS", pass);
-                    Administradores.put("NOMBRES", nombres);
-                    Administradores.put("APELLIDOS", apellidos);
-                    Administradores.put("EDAD", EdadInt);
-                    Administradores.put("IMAGEN", "");
+                            Administradores.put("UID", UID);
+                            Administradores.put("CORREO", correo);
+                            Administradores.put("PASSWORD", pass);
+                            Administradores.put("NOMBRES", nombre);
+                            Administradores.put("APELLIDOS", apellidos);
+                            Administradores.put("EDAD", EdadInt);
+                            Administradores.put("IMAGEN", "");
 
-//                    Inicializar FirebaseDatabase
-
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference reference = database.getReference("Bse de datos administradores9b");
-
-                    reference.child(UID).setValue(Administradores);
-
-                    startActivity(new Intent(getActivity(), MainActivityAdministrador.class));
-                    Toast.makeText(getActivity(), "Registro Exitoso", Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-
-                }
-                else {
-                    progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        })
+                            //Inicializar FirebaseDatabase
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference reference = database.getReference("BASE DE DATOS ADMINISTRADORES");
+                            reference.child(UID).setValue(Administradores);
+                            startActivity(new Intent(getActivity(), MainActivityAdministrador.class));
+                            Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+                            getActivity().finish();
+                        }else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
+
 
     }
 }

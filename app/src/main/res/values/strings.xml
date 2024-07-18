@@ -38,7 +38,16 @@
     <string name="Acceder">Acceder</string>
 
 
-    <string name="LoginTXT">Ingresar</string>
+    <string name="LoginTXT">Login de Administradores</string>
+    <string name="Ingresar">Ingresar</string>
+
+    <!--Categorías-->
+    <string name="Eligeunacategoriatxt">Elige Categoría</string>
+    <string name="Peliculas">Películas</string>
+    <string name="Series">Series</string>
+    <string name="Musica">Música</string>
+    <string name="VideoJuegos">Video Juegos</string>
+
 
 
 </resources>
