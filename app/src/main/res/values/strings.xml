@@ -1,13 +1,22 @@
 <resources>
-    <string name="app_name">Fondos de pantalla DMA</string>
-    <string name="desarrollador">Derechos reservados: Diana Andrade</string>
+    <string name="app_name">AD QuickBites</string>
+    <string name="title_inicio">La comida adecuada para cada momento</string>
+    <string name="content_inicio">Prueba nuestra comida para tu barriga feliz en cualquier momento</string>
+    <string name="desarrollador">Derechos reservados: Aldo Ivan y Diana Martínez</string>
+
+
+<!--    get started-->
+
+    <string name="get_title">Best Fastest Delivery Food For You</string>
+    <string name="get_content">Comienza ahora!!!</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
     <string name="InicioAdmin">Inicio</string>
-    <string name="PerfilAdmin">Perfil</string>
+    <string name="PerfilAdmin">Catálogo</string>
     <string name="RegistrarAdmin">Registrar</string>
     <string name="ListarAdmin">Lista de administradores</string>
     <string name="Salir">Cerrar sesión</string>
@@ -35,14 +44,14 @@
     <string name="Apellidos">Apellidos</string>
     <string name="Edad">Edad</string>
     <string name="FechaRegistro">Fecha de Registro</string>
-    <string name="Acceder">Acceder</string>
+    <string name="Acceder">Eat Away!</string>
 
 
-    <string name="LoginTXT">Login de Administradores</string>
+    <string name="LoginTXT">Login</string>
     <string name="Ingresar">Ingresar</string>
 
     <!--Categorías-->
-    <string name="Eligeunacategoriatxt">Elige Categoría</string>
+    <string name="Eligeunacategoriatxt">¿Qué te gustaría comer?</string>
     <string name="Peliculas">Películas</string>
     <string name="Series">Series</string>
     <string name="Musica">Música</string>

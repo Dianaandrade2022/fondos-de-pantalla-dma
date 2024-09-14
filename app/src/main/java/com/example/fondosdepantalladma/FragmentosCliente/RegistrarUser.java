@@ -1,4 +1,4 @@
-package com.example.fondosdepantalladma.FragmentosAdministrador;
+package com.example.fondosdepantalladma.FragmentosCliente;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.provider.Contacts;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fondosdepantalladma.InicioSesion;
+import com.example.fondosdepantalladma.MainActivity;
 import com.example.fondosdepantalladma.MainActivityAdministrador;
 import com.example.fondosdepantalladma.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,14 +33,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-public class RegistrarAdmin extends Fragment {
+public class RegistrarUser extends Fragment {
 
-    TextView FechaRegistro;
-    EditText Correo, Password, Nombres, Apellidos, Edad;
+    TextView FechaRegistro, IniciarSesion;
+    EditText Correo, Password, Nombres, Password2, Edad;
     Button Registrar;
 
     FirebaseAuth auth;
-
     ProgressDialog progressDialog;
 
     @Override
@@ -51,46 +51,58 @@ public class RegistrarAdmin extends Fragment {
         FechaRegistro = vista.findViewById(R.id.FechaRegistro);
         Correo = vista.findViewById(R.id.Correo);
         Password = vista.findViewById(R.id.Password);
+        Password2 = vista.findViewById(R.id.Password2);
         Nombres = vista.findViewById(R.id.Nombres);
-        Apellidos = vista.findViewById(R.id.Apellidos);
         Edad = vista.findViewById(R.id.Edad);
-
+        IniciarSesion = vista.findViewById(R.id.Login);
         Registrar = vista.findViewById(R.id.Registrar);
 
-        auth = FirebaseAuth.getInstance(); //Inicializando Firebase Authentication
+        auth = FirebaseAuth.getInstance(); // Inicializando Firebase Authentication
 
         Date date = new Date();
-        SimpleDateFormat fecha = new SimpleDateFormat("d 'de' MMMM 'del' yyyy"); //27 de Junio del 2024
-        String SFecha = fecha.format(date); //Convertir fecha a un string
+        SimpleDateFormat fecha = new SimpleDateFormat("d 'de' MMMM 'del' yyyy"); // 27 de Junio del 2024
+        String SFecha = fecha.format(date); // Convertir fecha a un string
         FechaRegistro.setText(SFecha);
 
-        //Al dar clic en registrar
+        // Al dar clic en registrar
         Registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Convertimos a string EditText: Correo y Password
+                // Convertimos a string EditText: Correo y Password
                 String correo = Correo.getText().toString();
                 String pass = Password.getText().toString();
+                String pass2 = Password2.getText().toString();
                 String nombre = Nombres.getText().toString();
-                String apellidos = Apellidos.getText().toString();
                 String edad = Edad.getText().toString();
 
-                if (correo.equals("")|| pass.equals("")|| nombre.equals("")|| apellidos.equals("")|| edad.equals("")){
+                if (!pass.equals(pass2)) {
+                    Toast.makeText(getActivity(), "Las contraseñas deben coincidir", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (correo.equals("") || pass.equals("") || nombre.equals("") || edad.equals("")) {
                     Toast.makeText(getActivity(), "Por favor llene todos los campos", Toast.LENGTH_SHORT).show();
-                }else {
-                    //validacion de correo
-                    if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()){
+                } else {
+                    // validacion de correo
+                    if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
                         Correo.setError("Correo Invalido!");
                         Correo.setFocusable(true);
-                    } else if (pass.length()<6) {
+                    } else if (pass.length() < 6) {
                         Password.setError("La contraseña debe ser mayor a 6 caracteres");
                         Password.setFocusable(true);
                     } else {
-                        RegistroAdministradores(correo, pass);
+                        RegistroUser(correo, pass);
                     }
-
                 }
+            }
+        });
 
+        // Redirigir a InicioSesion cuando se hace clic en el TextView
+        IniciarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), InicioSesion.class);
+                startActivity(intent);
             }
         });
 
@@ -99,47 +111,45 @@ public class RegistrarAdmin extends Fragment {
         progressDialog.setCancelable(false);
         return vista;
     }
-    //Metodo para registrar Administradores
-    private void RegistroAdministradores(String correo, String pass) {
 
+    // Metodo para registrar Administradores
+    private void RegistroUser(String correo, String pass) {
         progressDialog.show();
         auth.createUserWithEmailAndPassword(correo, pass)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Si el administrador fue creado correctamente
-                        if (task.isSuccessful()){
+                        // Si el administrador fue creado correctamente
+                        if (task.isSuccessful()) {
                             progressDialog.dismiss();
                             FirebaseUser user = auth.getCurrentUser();
                             assert user != null;
 
-                            //Convertir a cadena los datos
+                            // Convertir a cadena los datos
                             String UID = user.getUid();
                             String correo = Correo.getText().toString();
                             String pass = Password.getText().toString();
                             String nombre = Nombres.getText().toString();
-                            String apellidos = Apellidos.getText().toString();
                             String edad = Edad.getText().toString();
                             int EdadInt = Integer.parseInt(edad);
 
-                            HashMap<Object, Object> Administradores = new HashMap<>();
+                            HashMap<Object, Object> Usuario = new HashMap<>();
 
-                            Administradores.put("UID", UID);
-                            Administradores.put("CORREO", correo);
-                            Administradores.put("PASSWORD", pass);
-                            Administradores.put("NOMBRES", nombre);
-                            Administradores.put("APELLIDOS", apellidos);
-                            Administradores.put("EDAD", EdadInt);
-                            Administradores.put("IMAGEN", "");
+                            Usuario.put("UID", UID);
+                            Usuario.put("CORREO", correo);
+                            Usuario.put("PASSWORD", pass);
+                            Usuario.put("NOMBRES", nombre);
+                            Usuario.put("EDAD", EdadInt);
+                            Usuario.put("IMAGEN", "");
 
-                            //Inicializar FirebaseDatabase
+                            // Inicializar FirebaseDatabase
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference reference = database.getReference("BASE DE DATOS ADMINISTRADORES");
-                            reference.child(UID).setValue(Administradores);
-                            startActivity(new Intent(getActivity(), MainActivityAdministrador.class));
+                            DatabaseReference reference = database.getReference("BASE DE DATOS");
+                            reference.child(UID).setValue(Usuario);
+                            startActivity(new Intent(getActivity(), MainActivity.class));
                             Toast.makeText(getActivity(), "Registro exitoso", Toast.LENGTH_SHORT).show();
                             getActivity().finish();
-                        }else {
+                        } else {
                             progressDialog.dismiss();
                             Toast.makeText(getActivity(), "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
                         }
@@ -149,10 +159,7 @@ public class RegistrarAdmin extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getActivity(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
                     }
                 });
-
-
     }
 }

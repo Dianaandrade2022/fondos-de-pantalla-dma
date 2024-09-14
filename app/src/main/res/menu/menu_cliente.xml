@@ -13,6 +13,11 @@
                 android:title="@string/InicioCliente"
                 android:icon="@drawable/uno_icon"
                 ></item>
+            <item
+                android:id="@+id/Registrar"
+                android:title="@string/Registrar"
+                android:icon="@drawable/uno_icon"
+                ></item>
         </menu>
     </item>
 

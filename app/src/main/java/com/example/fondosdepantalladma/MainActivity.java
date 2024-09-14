@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.fondosdepantalladma.FragmentosCliente.AcercaDeCliente;
 import com.example.fondosdepantalladma.FragmentosCliente.CompartirCliente;
 import com.example.fondosdepantalladma.FragmentosCliente.InicioCliente;
+import com.example.fondosdepantalladma.FragmentosCliente.RegistrarUser;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InicioCliente()).commit();
         } else if (itemId == R.id.AcercaDe) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AcercaDeCliente()).commit();
+        }
+        else if (itemId == R.id.Registrar) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RegistrarUser()).commit();
         } else if (itemId == R.id.Compartir) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CompartirCliente()).commit();
         }

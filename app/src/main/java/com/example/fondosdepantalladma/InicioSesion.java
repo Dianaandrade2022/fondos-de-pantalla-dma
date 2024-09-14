@@ -11,11 +11,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fondosdepantalladma.FragmentosCliente.RegistrarUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +53,7 @@ public class InicioSesion extends AppCompatActivity {
         Password = findViewById(R.id.Password);
         Acceder = findViewById(R.id.Acceder);
 
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(InicioSesion.this);
@@ -76,6 +81,9 @@ public class InicioSesion extends AppCompatActivity {
 
         });
 
+
+
+
     }
 
     private void LogeoAdministradores(String correo, String pass) {
@@ -89,17 +97,9 @@ public class InicioSesion extends AppCompatActivity {
                         if (task.isSuccessful()){
                             progressDialog.dismiss();
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-
-//                            startActivity(new Intent(InicioSesion.this, MainActivityAdministrador.class));
-//                            assert user != null;
-//                            Toast.makeText(InicioSesion.this, "Bienvenido(a)" + user.getEmail(), Toast.LENGTH_SHORT).show();
-//                            finish();
-
-
                             Intent intent = new Intent(getApplicationContext(), MainActivityAdministrador.class)
                                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                             Toast.makeText(InicioSesion.this, "Bienvenido(a)" + user.getEmail(),Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             finish();

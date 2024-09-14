@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.fondosdepantalladma.FragmentosAdministrador.InicioAdmin;
 import com.example.fondosdepantalladma.FragmentosAdministrador.ListAdmin;
 import com.example.fondosdepantalladma.FragmentosAdministrador.PerfilAdmin;
-import com.example.fondosdepantalladma.FragmentosAdministrador.RegistrarAdmin;
+import com.example.fondosdepantalladma.FragmentosCliente.RegistrarUser;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,7 +25,6 @@ public class MainActivityAdministrador extends AppCompatActivity implements OnNa
     DrawerLayout drawerLayout;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,6 @@ public class MainActivityAdministrador extends AppCompatActivity implements OnNa
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
-        //Fragmento por defectoD
 
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerA, new InicioAdmin()).commit();
@@ -69,9 +67,6 @@ public class MainActivityAdministrador extends AppCompatActivity implements OnNa
         } else if (itemId == R.id.PerfilAdmin){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerA,
                     new PerfilAdmin()).commit();
-        }else if (itemId == R.id.RegistrarAdmin) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerA,
-                    new RegistrarAdmin()).commit();
         }else if (itemId == R.id.ListarAdmin) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerA,
                     new ListAdmin()).commit();
